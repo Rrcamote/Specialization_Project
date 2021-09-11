@@ -33,6 +33,3 @@ Auth::routes();
 
 
 Route::get('/index',[HomeController::class,'index'])->name('index');
-
-
-//This change is for new branch
