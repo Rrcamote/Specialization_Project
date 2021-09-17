@@ -43,21 +43,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function massage_type(){
-        return $this->hasOne(Massage::class);
+    public function schedules(){
+        return $this->hasMany(Schedules::class);
     }
-    // protected static function boot()
-    // {
-    //     parent::boot();
 
-    //     static::created(function ($user) {
-
-    //         $user->massage_types()->create([
-                
-    //             'username' => $user->username
-
-    //         ]);
-            
-    //     });
-    // }
 }
