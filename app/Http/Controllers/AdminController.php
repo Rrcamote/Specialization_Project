@@ -96,7 +96,11 @@ class AdminController extends Controller
      */
     public function edit(Massage $massage)
     {
-        return view('admin.edit')->with('massage', $massage);
+        if(Gate::allows('is-admin', auth()->user())){
+            return view('admin.edit')->with('massage', $massage);
+        }else{
+            return redirect('/user');
+        }
     }
 
     /**
