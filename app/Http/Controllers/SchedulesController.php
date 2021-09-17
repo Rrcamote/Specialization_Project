@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Schedules;
 use App\Models\Massage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class SchedulesController extends Controller
 {
@@ -15,8 +16,12 @@ class SchedulesController extends Controller
      */
     public function index()
     {
-        $schedules = Schedules::with('massage','user')->get();
-        return view('admin.schedules')->with('schedules',$schedules);
+        if(Gate::allows('is-admin', auth()->user())){
+            $schedules = Schedules::with('massage','user')->get();
+            return view('admin.schedules')->with('schedules',$schedules);
+        }else{
+            return redirect('/user');
+        }
     }
 
     /**
@@ -105,7 +110,12 @@ class SchedulesController extends Controller
 
     public function userSchedules()
     {
-        $schedules = Schedules::where('user_id', auth()->user()->id)->with('massage','user')->get();
-        return view('user.schedules')->with('schedules', $schedules);
+        if(Gate::allows('is-admin', auth()->user())){
+            return redirect('/admin');
+        }else{
+            $schedules = Schedules::where('user_id', auth()->user()->id)->with('massage','user')->get();
+            return view('user.schedules')->with('schedules', $schedules);
+        }
+        
     }
 }
