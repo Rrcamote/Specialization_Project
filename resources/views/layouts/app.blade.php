@@ -13,17 +13,13 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <style>
-
-
-    </style>
 </head>
 
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light " style="background-color: #49ada7;">
             <div class="container">
-                <a class="navbar-brand d-flex" href="{{ url('/') }}">
+                <a class="navbar-brand d-flex" href="{{ url('/home') }}">
                     <div class="pr-2"><img src="/img/logo.png" style="height:50px; border-right: 2px solid #333"></div>
                     <div class="pl-2 pt-2">
                         <h4>RJ <span style="color:green;">MTBS</span></h4>
@@ -52,6 +48,13 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            @if(Auth::user()->user_type == 'user')
+                                <a class="dropdown-item" href="/user/myschedules">My Schedules</a>
+                                <a class="dropdown-item" href="/home">Massages</a>
+                            @else
+                                <a class="dropdown-item" href="/admin/schedules">All Schedules</a>
+                                <a class="dropdown-item" href="/home">Massages</a>
+                            @endif
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}

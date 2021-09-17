@@ -1,4 +1,4 @@
-@extends('..layouts.app')
+@extends('layouts.app')
 
 @section('content')
 
@@ -23,7 +23,7 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
                             </div>
                             <div class="modal-body" style="background-color: #d3eaf2;">
-                                <form action="/admin" method="post" enctype="multipart/form-data">
+                                <form action="/admin/create" method="post" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="form-group mb-3">
@@ -53,6 +53,7 @@
                 <br>
                 <div class="card-body">
                     <br>
+                    @if(count($massages) != 0)
                     <table id="example1" class="table table-bordered dataTable no-footer" role="grid"
                         aria-describedby="example1_info">
                         <thead>
@@ -63,19 +64,23 @@
                             </tr>
 
                         </thead>
+                        
                         @foreach($massages as $massage)
                         <tr class="text-center">
 
                             <td>{{$massage->name}}</td>
                             <td>
-                                <img src="/storage/img/{{$massage->image}}" alt="">
+                                <img src="/storage/img/{{$massage->image}}" alt="" class="w-25">
                             </td>
                             <td>{{$massage->rate}} Php/ hour</td>
-
-
                         </tr>
                         @endforeach
                     </table>
+
+                    @else
+                        <h1>No Sulod</h1>
+
+                    @endif
                 </div>
             </div>
         </div>

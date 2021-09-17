@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MassageController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SchedulesController;
+use App\Http\Controllers\AdminController;
 
 
 /*
@@ -21,15 +23,15 @@ Route::get('/', function () {
 });
 
 
-
-Route::resource('/admin', MassageController::class);
-
-
+Route::get('/home', [HomeController::class,'index']);
+Route::get('/admin', [AdminController::class,'index']);
+Route::post('/admin/create', [AdminController::class,'store']);
 Auth::routes();
-
- Route::get('/massage', [MassageController::class, 'index'])->name('home');
-
-
-
-
 Route::get('/index',[HomeController::class,'index'])->name('index');
+Route::get('/user',[UserController::class, 'index']);
+Route::get('/user/create/{massage}',[UserController::class, 'create']);
+Route::get('/user/myschedules',[SchedulesController::class,'userSchedules']);
+Route::post('/book/{msgg}',[SchedulesController::class, 'store']);
+Route::get('/admin/schedules', [SchedulesController::class, 'index']);
+Route::post('/admin/confirm/{schedule}', [SchedulesController::class, 'update']);
+Route::get('/admin/edit/{massage}', [AdminController::class, 'edit']);

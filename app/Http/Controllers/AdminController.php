@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Models\Massage;
-class MassageController extends Controller
+
+class AdminController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -13,8 +20,12 @@ class MassageController extends Controller
      */
     public function index()
     {
-       $massages = Massage::all();
-       return view('admin.home')->with('massages', $massages);
+        if(Gate::allows('is-admin', auth()->user())){
+            $massage = Massage::all();
+            return view('admin.home')->with('massages', $massage);
+        }else{
+            return redirect('/user');
+        }
     }
 
     /**
@@ -38,7 +49,7 @@ class MassageController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'rate' => 'required',
-            'image' => 'image|max:1999'
+            'image' => 'image|nullable|max:1999'
         ]);
     
         //Handle File Upload
@@ -54,7 +65,7 @@ class MassageController extends Controller
             //Upload the image
             $path = $request->file('image')->storeAs('public/img', $fileNameToStore);
         }else{
-           $fileNameToStore = 'noImage.jpg';
+           $fileNameToStore = 'noImage.png';
         }
         
         $massage = new Massage;
@@ -83,9 +94,9 @@ class MassageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Massage $massage)
     {
-        //
+        return view('admin.edit')->with('massage', $massage);
     }
 
     /**
@@ -110,4 +121,5 @@ class MassageController extends Controller
     {
         //
     }
+
 }

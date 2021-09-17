@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>MTBS</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -60,13 +60,13 @@
                     <div class="d-flex justify-content-center">
                         @if (Route::has('login'))
                         <div class="pr-2" style="height:50px;  ">
-                            <a href="{{ route('login') }}" class="btn btn-primary btn-lg" style="width: 100px;">Login</a>
+                            <a href="{{ route('login') }}" class="btn btn-primary btn-lg h-75 w-100">Login</a>
                         </div>
                         @endif
 
                         @if (Route::has('register'))
                         <div class="pl-2">
-                            <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Register</a>
+                            <a href="{{ route('register') }}" class="btn btn-primary btn-lg w-100 h-75 ">Register</a>
                         </div>
                         @endif
                     </div>
